@@ -1,6 +1,6 @@
 <?php
 
-namespace Emoe\GuzzleBundle\Handler;
+namespace Emoe\GuzzleBundle\Middleware;
 
 use GuzzleHttp\HandlerStack;
 use Symfony\Component\Stopwatch\Stopwatch;
@@ -8,8 +8,10 @@ use GuzzleHttp\Middleware;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class RequestHandler
+class ProfilerRequestMiddleware
 {
+    const NAME = 'Guzzle';
+
     /**
      * @var HandlerStack
      */
@@ -38,7 +40,7 @@ class RequestHandler
         $this->stack = $stack;
         $this->stopwatch = $stopwatch;
 
-        $this->attachMiddlware($stack);
+        $this->attachMiddleware($stack);
     }
 
     /**
@@ -49,7 +51,12 @@ class RequestHandler
         return $this->stack;
     }
 
-    private function attachMiddlware(HandlerStack $stack)
+    /**
+     * Attaches middleware functions to handle request lifecycle
+     *
+     * @param HandlerStack $stack
+     */
+    private function attachMiddleware(HandlerStack $stack)
     {
         $stack->push(Middleware::mapRequest(function (RequestInterface $request) {
             $this->onRequestBeforeSend($request);
@@ -104,7 +111,7 @@ class RequestHandler
         $this->requests[$this->hash($request)] = count($this->requests) + 1;
         $name = $this->getEventName($request);
 
-        $this->stopwatch->start($name, 'guzzle');
+        $this->stopwatch->start($name, self::NAME);
     }
 
     /**
@@ -134,6 +141,12 @@ class RequestHandler
      */
     private function getEventName(RequestInterface $request)
     {
-        return sprintf('[%d] %s %s', $this->requests[$this->hash($request)], $request->getMethod(), urldecode((string)$request->getUri()));
+        return sprintf(
+            '%s: [%d] %s %s',
+            self::NAME,
+            $this->requests[$this->hash($request)],
+            $request->getMethod(),
+            urldecode((string)$request->getUri())
+        );
     }
 }

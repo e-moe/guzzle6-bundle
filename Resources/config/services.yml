@@ -1,21 +1,23 @@
 parameters:
     guzzle.client.class: GuzzleHttp\Client
-    guzzle.requesthandler.class: Emoe\GuzzleBundle\Handler\RequestHandler
-    guzzle.handlerstack.class: GuzzleHttp\HandlerStack
+    guzzle.profiler_request_middlware.class: Emoe\GuzzleBundle\Middleware\ProfilerRequestMiddleware
+    guzzle.handler_stack.class: GuzzleHttp\HandlerStack
 
 services:
-    guzzle.handlerstack:
-        class: %guzzle.handlerstack.class%
-        factory: [%guzzle.handlerstack.class%, create]
+    guzzle.handler_stack:
+        class: %guzzle.handler_stack.class%
+        factory: [%guzzle.handler_stack.class%, create]
         public: false
 
-    guzzle.requesthandler:
-        class: %guzzle.requesthandler.class%
+    guzzle.profiler_request_middleware:
+        class: %guzzle.profiler_request_middlware.class%
         arguments:
-            - @guzzle.handlerstack
+            - @guzzle.handler_stack
             - @debug.stopwatch
+        # public: false # todo: find how to pass handlerStack with attached middleware to guzzle client
 
     guzzle.client:
         class: %guzzle.client.class%
         arguments:
-            - handler: "@=service('guzzle.requesthandler').getHandlerStack()"
+            - handler: "@=service('guzzle.profiler_request_middleware').getHandlerStack()"
+            # tag + compiler pass to set propper handler
