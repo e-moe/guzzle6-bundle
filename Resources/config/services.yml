@@ -1,6 +1,18 @@
 parameters:
     guzzle.client.class: GuzzleHttp\Client
+    guzzle.handler.params:
+        - [Emoe\GuzzleBundle\Handler\RequestHandler, handler]
 
 services:
+    guzzle.handler:
+        class: GuzzleHttp\HandlerStack
+        factory: [GuzzleHttp\HandlerStack, create]
+        public: false
+        calls:
+            - [push, [ %guzzle.handler.params% ]
+
     guzzle.client:
         class: %guzzle.client.class%
+        arguments:
+            - handler: @guzzle.handler
+        tags: [guzzle.client]
