@@ -1,3 +1,6 @@
+parameters:
+    guzzle.client.class: GuzzleHttp\Client
+
 services:
     guzzle.client:
-        class: GuzzleHttp\Client
+        class: %guzzle.client.class%
