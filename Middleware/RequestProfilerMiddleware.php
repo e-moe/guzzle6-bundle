@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class RequestProfilerMiddleware implements MiddlewareInterface
 {
-    const NAME = 'Guzzle';
+    const NAME = 'Guzzle Profiler';
 
     /**
      * @var Stopwatch|null

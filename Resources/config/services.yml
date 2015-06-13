@@ -22,11 +22,16 @@ services:
         arguments:
             - @debug.stopwatch
 
+    guzzle.stopwatch:
+        class: Symfony\Component\Stopwatch\Stopwatch
+        public: false
+
     guzzle.request_logger_middleware:
         class: %guzzle.request_logger_middlware.class%
         public: false
         arguments:
             - @guzzle.log_adapter
+            - @guzzle.stopwatch
             - @guzzle.message_formatter
 
     guzzle.log_adapter:

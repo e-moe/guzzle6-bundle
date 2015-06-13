@@ -8,11 +8,17 @@ use GuzzleHttp\Middleware;
 use GuzzleHttp\HandlerStack;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\Stopwatch\Stopwatch;
 
 class RequestLoggerMiddleware implements MiddlewareInterface
 {
+    const NAME = 'Guzzle Logger';
+
     /** @var LogAdapterInterface Adapter responsible for writing log data */
     protected $logAdapter;
+
+    /** @var Stopwatch */
+    protected $stopwatch;
 
     /** @var MessageFormatter Formatter used to format messages before logging */
     protected $formatter;
@@ -24,9 +30,10 @@ class RequestLoggerMiddleware implements MiddlewareInterface
      */
     protected $requests = array();
 
-    public function __construct(LogAdapterInterface $logAdapter, $formatter = null)
+    public function __construct(LogAdapterInterface $logAdapter, Stopwatch $stopwatch, $formatter = null)
     {
         $this->logAdapter = $logAdapter;
+        $this->stopwatch = $stopwatch;
         $this->formatter = $formatter instanceof MessageFormatter ? $formatter : new MessageFormatter($formatter);
     }
 
@@ -66,7 +73,7 @@ class RequestLoggerMiddleware implements MiddlewareInterface
     private function onRequestBeforeSend(RequestInterface $request)
     {
         $hash = $this->hash($request);
-        $this->requests[$hash] = -microtime(true);
+        $this->stopwatch->start($hash, self::NAME);
     }
 
     /**
@@ -81,11 +88,11 @@ class RequestLoggerMiddleware implements MiddlewareInterface
         // Send the log message to the adapter, adding a category and host
         $priority = $response && $this->isError($response) ? LOG_ERR : LOG_DEBUG;
         $message = $this->formatter->format($request, $response);
-        $this->requests[$hash] += microtime(true);
+        $event = $this->stopwatch->stop($hash);
         $this->logAdapter->log($message, $priority, array(
             'request'  => $request,
             'response' => $response,
-            'time'     => $this->requests[$hash],
+            'time'     => $event->getDuration(),
         ));
     }
 

@@ -48,22 +48,13 @@ class GuzzleDataCollector extends DataCollector
             $guzzleResponse = $log['extras']['response'];
 
             $datum['message'] = $log['message'];
-            $datum['time'] = $this->formatTime($log['extras']['time']);
+            $datum['time'] = $log['extras']['time'];
             $datum['request'] = $this->requestFormatter->format($guzzleRequest);
             $datum['response'] = $this->responseFormatter->format($guzzleRequest, $guzzleResponse);
             $datum['is_error'] = $this->isError($log['extras']['response']);
 
             $this->data['requests'][$requestId] = $datum;
         }
-    }
-
-    protected function formatTime($time)
-    {
-        if ($time < 0) {
-            $time = 0;
-        }
-
-        return (int) ($time * 1000);
     }
 
     protected function isError(ResponseInterface $response)
@@ -74,6 +65,17 @@ class GuzzleDataCollector extends DataCollector
     public function getRequests()
     {
         return $this->data['requests'];
+    }
+
+    public function getTotalDuration()
+    {
+        return array_reduce(
+            $this->getRequests(),
+            function ($carry, array $request) {
+                return $carry + $request['time'];
+            },
+            0
+        );
     }
 
     public function getName()
