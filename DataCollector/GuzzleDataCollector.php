@@ -3,6 +3,7 @@
 namespace Emoe\GuzzleBundle\DataCollector;
 
 use Emoe\GuzzleBundle\Log\ArrayLogAdapter;
+use GuzzleHttp\MessageFormatter;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,11 +12,23 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
 class GuzzleDataCollector extends DataCollector
 {
+    /** @var ArrayLogAdapter */
     protected $logAdapter;
 
-    public function __construct(ArrayLogAdapter $logAdapter)
-    {
+    /** @var MessageFormatter */
+    protected $requestFormatter;
+
+    /** @var MessageFormatter */
+    protected $responseFormatter;
+
+    public function __construct(
+        ArrayLogAdapter $logAdapter,
+        MessageFormatter $requestFormatter,
+        MessageFormatter $responseFormatter
+    ) {
         $this->logAdapter = $logAdapter;
+        $this->requestFormatter = $requestFormatter;
+        $this->responseFormatter = $responseFormatter;
         $this->data['requests'] = array();
     }
 
@@ -29,39 +42,22 @@ class GuzzleDataCollector extends DataCollector
             }
 
             $datum['message'] = $log['message'];
-            //$datum['time'] = $this->getRequestTime($log['extras']['response']);
-            $datum['request'] = $this->requestToString($log['extras']['request']);
-            $datum['response'] = $this->responseToString($log['extras']['response']);
+            $datum['time'] = $this->formatTime($log['extras']['time']);
+            $datum['request'] = $this->requestFormatter->format($log['extras']['request']);
+            $datum['response'] = $this->responseFormatter->format($log['extras']['request'], $log['extras']['response']);
             $datum['is_error'] = $this->isError($log['extras']['response']);
 
             $this->data['requests'][$requestId] = $datum;
         }
     }
 
-    /*
-    private function getRequestTime(GuzzleResponse $response)
+    protected function formatTime($time)
     {
-        $time = $response->getInfo('total_time');
-
-        if (null === $time) {
+        if ($time < 0) {
             $time = 0;
         }
 
         return (int) ($time * 1000);
-    }
-    */
-
-    // todo: wrap request/response classes
-    protected function requestToString(RequestInterface $request)
-    {
-        // todo: show full info (headers, body, ...)
-        return (string) $request->getBody();
-    }
-
-    protected function responseToString(ResponseInterface $response)
-    {
-        // todo: show full info (headers, body, ...)
-        return (string) $response->getBody();
     }
 
     protected function isError(ResponseInterface $response)

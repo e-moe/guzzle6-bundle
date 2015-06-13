@@ -13,8 +13,16 @@ class RequestLoggerMiddleware implements MiddlewareInterface
 {
     /** @var LogAdapterInterface Adapter responsible for writing log data */
     protected $logAdapter;
+
     /** @var MessageFormatter Formatter used to format messages before logging */
     protected $formatter;
+
+    /**
+     * Requests timing
+     *
+     * @var array
+     */
+    protected $requests = array();
 
     public function __construct(LogAdapterInterface $logAdapter, $formatter = null)
     {
@@ -57,7 +65,8 @@ class RequestLoggerMiddleware implements MiddlewareInterface
      */
     private function onRequestBeforeSend(RequestInterface $request)
     {
-
+        $hash = $this->hash($request);
+        $this->requests[$hash] = -microtime(true);
     }
 
     /**
@@ -68,13 +77,26 @@ class RequestLoggerMiddleware implements MiddlewareInterface
      */
     private function onRequestComplete(RequestInterface $request, ResponseInterface $response)
     {
+        $hash = $this->hash($request);
         // Send the log message to the adapter, adding a category and host
         $priority = $response && $this->isError($response) ? LOG_ERR : LOG_DEBUG;
         $message = $this->formatter->format($request, $response);
+        $this->requests[$hash] += microtime(true);
         $this->logAdapter->log($message, $priority, array(
             'request'  => $request,
             'response' => $response,
+            'time'     => $this->requests[$hash],
         ));
+    }
+
+    /**
+     * @param RequestInterface $request
+     *
+     * @return string
+     */
+    private function hash(RequestInterface $request)
+    {
+        return spl_object_hash($request);
     }
 
     /**
