@@ -41,10 +41,16 @@ class GuzzleDataCollector extends DataCollector
                 continue;
             }
 
+            /** @var RequestInterface $guzzleRequest */
+            $guzzleRequest = $log['extras']['request'];
+
+            /** @var ResponseInterface $guzzleResponse */
+            $guzzleResponse = $log['extras']['response'];
+
             $datum['message'] = $log['message'];
             $datum['time'] = $this->formatTime($log['extras']['time']);
-            $datum['request'] = $this->requestFormatter->format($log['extras']['request']);
-            $datum['response'] = $this->responseFormatter->format($log['extras']['request'], $log['extras']['response']);
+            $datum['request'] = $this->requestFormatter->format($guzzleRequest);
+            $datum['response'] = $this->responseFormatter->format($guzzleRequest, $guzzleResponse);
             $datum['is_error'] = $this->isError($log['extras']['response']);
 
             $this->data['requests'][$requestId] = $datum;
