@@ -7,11 +7,6 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 
-/**
- * Add Monolog if available.
- *
- * @author Chris Wilkinson <chris.wilkinson@admin.cam.ac.uk>
- */
 class MonologCompilerPass implements CompilerPassInterface
 {
     /**
@@ -19,7 +14,7 @@ class MonologCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (false === $container->has('monolog.logger')) { // todo: add log.enabled config option
+        if (false === $container->has('monolog.logger') || false === $container->getParameter('guzzle.log.enabled')) {
             return;
         }
 
