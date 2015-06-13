@@ -16,18 +16,22 @@ class ClientCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $stack = $container->findDefinition('guzzle.handler_stack');
-        $middleware = $container->findDefinition('guzzle.profiler_request_middleware');
-        $middleware->addMethodCall('attachMiddleware', [$stack]);
+        $profilerMiddleware = $container->findDefinition('guzzle.request_profiler_middleware');
+        $profilerMiddleware->addMethodCall('attachMiddleware', [$stack]);
+        $loggerMiddleware = $container->findDefinition('guzzle.request_logger_middleware');
+        $loggerMiddleware->addMethodCall('attachMiddleware', [$stack]);
 
         foreach ($container->findTaggedServiceIds('guzzle.client') as $id => $attributes) {
             $definition = $container->getDefinition($id);
             $arguments = $definition->getArguments();
             if (isset($arguments[0]['handler'])) {
                 $stack = $arguments[0]['handler'];
-                $middleware->addMethodCall('attachMiddleware', [$stack]);
+                $profilerMiddleware->addMethodCall('attachMiddleware', [$stack]);
+                $loggerMiddleware->addMethodCall('attachMiddleware', [$stack]);
             }
             $arguments[0]['handler'] = $stack;
-            $arguments[0]['middleware'] = $middleware;
+            $arguments[0]['profiler_middleware'] = $profilerMiddleware;
+            $arguments[0]['logger_middleware'] = $loggerMiddleware;
             $definition->setArguments($arguments);
         }
     }

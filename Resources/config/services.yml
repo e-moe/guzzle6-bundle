@@ -1,7 +1,12 @@
 parameters:
     guzzle.client.class: GuzzleHttp\Client
-    guzzle.profiler_request_middlware.class: Emoe\GuzzleBundle\Middleware\ProfilerRequestMiddleware
     guzzle.handler_stack.class: GuzzleHttp\HandlerStack
+    guzzle.request_profiler_middlware.class: Emoe\GuzzleBundle\Middleware\RequestProfilerMiddleware
+    guzzle.request_logger_middlware.class: Emoe\GuzzleBundle\Middleware\RequestLoggerMiddleware
+    guzzle.log_adapter.class: Emoe\GuzzleBundle\Log\ArrayLogAdapter
+    guzzle.formatter.class: GuzzleHttp\MessageFormatter
+    guzzle.data_collector.class: Emoe\GuzzleBundle\DataCollector\GuzzleDataCollector
+    # todo: rename guzzle prefix
 
 services:
     guzzle.handler_stack:
@@ -9,11 +14,35 @@ services:
         public: false
         factory: [%guzzle.handler_stack.class%, create]
 
-    guzzle.profiler_request_middleware:
-        class: %guzzle.profiler_request_middlware.class%
+    guzzle.request_profiler_middleware:
+        class: %guzzle.request_profiler_middlware.class%
         public: false
         arguments:
             - @debug.stopwatch
+
+    guzzle.request_logger_middleware:
+        class: %guzzle.request_logger_middlware.class%
+        public: false
+        arguments:
+            - @guzzle.log_adapter
+            - @guzzle.formatter
+
+    guzzle.log_adapter:
+        class: %guzzle.log_adapter.class%
+        public: false
+    # todo: handle monolog
+
+    guzzle.formatter:
+        class: %guzzle.formatter.class%
+        public: false
+
+    guzzle.data_collector:
+        class: %guzzle.data_collector.class%
+        public: false
+        arguments:
+            - @guzzle.log_adapter
+        tags:
+            - { name: data_collector, template: "EmoeGuzzleBundle:Collector:guzzle", id: "guzzle" }
 
     guzzle.client:
         class: %guzzle.client.class%

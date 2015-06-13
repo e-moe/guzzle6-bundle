@@ -8,7 +8,7 @@ use GuzzleHttp\Middleware;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class ProfilerRequestMiddleware
+class RequestProfilerMiddleware implements MiddlewareInterface
 {
     const NAME = 'Guzzle';
 
@@ -35,11 +35,7 @@ class ProfilerRequestMiddleware
     }
 
     /**
-     * Attaches middleware functions to handle request lifecycle
-     *
-     * @param HandlerStack $stack
-     *
-     * @return HandlerStack
+     * @inheritdoc
      */
     public function attachMiddleware(HandlerStack $stack)
     {
