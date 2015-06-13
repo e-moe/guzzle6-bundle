@@ -32,7 +32,6 @@ services:
     guzzle.log_adapter:
         class: %guzzle.log_adapter.class%
         public: false
-    # todo: handle monolog
 
     guzzle.message_formatter:
         class: %guzzle.formatter.class%
