@@ -6,18 +6,16 @@ parameters:
 services:
     guzzle.handler_stack:
         class: %guzzle.handler_stack.class%
-        factory: [%guzzle.handler_stack.class%, create]
         public: false
+        factory: [%guzzle.handler_stack.class%, create]
 
     guzzle.profiler_request_middleware:
         class: %guzzle.profiler_request_middlware.class%
+        public: false
         arguments:
-            - @guzzle.handler_stack
             - @debug.stopwatch
-        # public: false # todo: find how to pass handlerStack with attached middleware to guzzle client
 
     guzzle.client:
         class: %guzzle.client.class%
-        arguments:
-            - handler: "@=service('guzzle.profiler_request_middleware').getHandlerStack()"
-            # tag + compiler pass to set propper handler
+        tags:
+            - { name: guzzle.client }

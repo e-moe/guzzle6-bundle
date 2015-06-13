@@ -13,11 +13,6 @@ class ProfilerRequestMiddleware
     const NAME = 'Guzzle';
 
     /**
-     * @var HandlerStack
-     */
-    protected $stack;
-
-    /**
      * @var Stopwatch|null
      */
     protected $stopwatch;
@@ -32,31 +27,21 @@ class ProfilerRequestMiddleware
     /**
      * Constructor.
      *
-     * @param HandlerStack $stack
      * @param Stopwatch|null $stopwatch
      */
-    public function __construct(HandlerStack $stack, Stopwatch $stopwatch = null)
+    public function __construct(Stopwatch $stopwatch = null)
     {
-        $this->stack = $stack;
         $this->stopwatch = $stopwatch;
-
-        $this->attachMiddleware($stack);
-    }
-
-    /**
-     * @return HandlerStack
-     */
-    public function getHandlerStack()
-    {
-        return $this->stack;
     }
 
     /**
      * Attaches middleware functions to handle request lifecycle
      *
      * @param HandlerStack $stack
+     *
+     * @return HandlerStack
      */
-    private function attachMiddleware(HandlerStack $stack)
+    public function attachMiddleware(HandlerStack $stack)
     {
         $stack->push(Middleware::mapRequest(function (RequestInterface $request) {
             $this->onRequestBeforeSend($request);
@@ -77,6 +62,8 @@ class ProfilerRequestMiddleware
                 );
             };
         });
+
+        return $stack;
     }
 
     /**
