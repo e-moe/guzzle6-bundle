@@ -3,7 +3,7 @@
     "type": "symfony-bundle",
     "description": "Integrates Guzzle 6 into your Symfony2 application",
     "keywords": ["guzzle", "bundle", "http", "http client", "rest", "client", "web service", "curl", "api"],
-    "homepage": "https://github.com/e-moe/xxx",
+    "homepage": "https://github.com/e-moe/guzzle6-bundle",
     "license": "MIT",
     "authors": [
         {
@@ -12,7 +12,7 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/e-moe/xxx/issues"
+        "issues": "https://github.com/e-moe/guzzle6-bundle/issues"
     },
     "require": {
         "php": ">=5.5",
