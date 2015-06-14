@@ -8,7 +8,7 @@
 This bundle integrates [Guzzle 6.x][guzzle] into Symfony. Guzzle is a PHP framework for building RESTful web service clients.
 
 ## Requirements
- - PHP 5.5 or above ([Guzzle] 6[guzzle] requrenment)
+ - PHP 5.5 or above ([Guzzle 6][guzzle] requrenment)
  - [Guzzle PHP Framework][guzzle] (included by composer)
 
  
@@ -67,7 +67,7 @@ services:
 ## Authors
  - Nikolay Labinskiy aka e-moe
  
-Inspired by Chris Wilkinson's [GuzzleBundle][misd-guzzle].
+Inspired by Chris Wilkinson's and Florian Preusner's GuzzleBundles ([1][misd-guzzle], [2][8p]).
 
 See also the list of [contributors][contributors] who participated in this project.
 
@@ -78,3 +78,4 @@ This bundle is released under the [MIT license](Resources/meta/LICENSE)
 [packagist]:    https://packagist.org/packages/e-moe/guzzle6-bundle
 [contributors]: https://github.com/e-moe/guzzle6-bundle/graphs/contributors
 [misd-guzzle]:  https://github.com/misd-service-development/guzzle-bundle
+[8p]:           https://github.com/8p/GuzzleBundle
