@@ -15,10 +15,10 @@ class ClientCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $stack = $container->findDefinition('guzzle.handler_stack');
-        $profilerMiddleware = $container->findDefinition('guzzle.request_profiler_middleware');
+        $stack = $container->findDefinition('emoe_guzzle.handler_stack');
+        $profilerMiddleware = $container->findDefinition('emoe_guzzle.request_profiler_middleware');
         $profilerMiddleware->addMethodCall('attachMiddleware', [$stack]);
-        $loggerMiddleware = $container->findDefinition('guzzle.request_logger_middleware');
+        $loggerMiddleware = $container->findDefinition('emoe_guzzle.request_logger_middleware');
         $loggerMiddleware->addMethodCall('attachMiddleware', [$stack]);
 
         foreach ($container->findTaggedServiceIds('guzzle.client') as $id => $attributes) {

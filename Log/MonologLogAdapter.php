@@ -5,8 +5,7 @@ namespace Emoe\GuzzleBundle\Log;
 use Monolog\Logger;
 
 /**
- * @deprecated
- * @codeCoverageIgnore
+ * Stores all log messages in Monolog
  */
 class MonologLogAdapter extends AbstractLogAdapter
 {

@@ -1,66 +1,67 @@
 parameters:
     guzzle.client.class: GuzzleHttp\Client
     guzzle.handler_stack.class: GuzzleHttp\HandlerStack
-    guzzle.request_profiler_middlware.class: Emoe\GuzzleBundle\Middleware\RequestProfilerMiddleware
-    guzzle.request_logger_middlware.class: Emoe\GuzzleBundle\Middleware\RequestLoggerMiddleware
-    guzzle.log_adapter.class: Emoe\GuzzleBundle\Log\ArrayLogAdapter
     guzzle.formatter.class: GuzzleHttp\MessageFormatter
-    guzzle.data_collector.class: Emoe\GuzzleBundle\DataCollector\GuzzleDataCollector
-    # todo: rename guzzle prefix
-    guzzle.request.format: "{request}"
-    guzzle.response.format: "{response}"
+
+    emoe_guzzle.request_profiler_middlware.class: Emoe\GuzzleBundle\Middleware\RequestProfilerMiddleware
+    emoe_guzzle.request_logger_middlware.class: Emoe\GuzzleBundle\Middleware\RequestLoggerMiddleware
+    emoe_guzzle.log_adapter.class: Emoe\GuzzleBundle\Log\ArrayLogAdapter
+    emoe_guzzle.data_collector.class: Emoe\GuzzleBundle\DataCollector\GuzzleDataCollector
+    emoe_guzzle.stopwatch.class: Symfony\Component\Stopwatch\Stopwatch
+    emoe_guzzle.request.format: "{request}"
+    emoe_guzzle.response.format: "{response}"
 
 services:
-    guzzle.handler_stack:
+    emoe_guzzle.handler_stack:
         class: %guzzle.handler_stack.class%
         public: false
         factory: [%guzzle.handler_stack.class%, create]
 
-    guzzle.request_profiler_middleware:
-        class: %guzzle.request_profiler_middlware.class%
+    emoe_guzzle.request_profiler_middleware:
+        class: %emoe_guzzle.request_profiler_middlware.class%
         public: false
         arguments:
             - @debug.stopwatch
 
-    guzzle.stopwatch:
-        class: Symfony\Component\Stopwatch\Stopwatch
-        public: false
-
-    guzzle.request_logger_middleware:
-        class: %guzzle.request_logger_middlware.class%
+    emoe_guzzle.request_logger_middleware:
+        class: %emoe_guzzle.request_logger_middlware.class%
         public: false
         arguments:
-            - @guzzle.log_adapter
-            - @guzzle.stopwatch
-            - @guzzle.message_formatter
+            - @emoe_guzzle.log_adapter
+            - @emoe_guzzle.stopwatch
+            - @emoe_guzzle.message_formatter
 
-    guzzle.log_adapter:
-        class: %guzzle.log_adapter.class%
+    emoe_guzzle.stopwatch:
+        class: %emoe_guzzle.stopwatch.class%
         public: false
 
-    guzzle.message_formatter:
+    emoe_guzzle.log_adapter:
+        class: %emoe_guzzle.log_adapter.class%
+        public: false
+
+    emoe_guzzle.message_formatter:
         class: %guzzle.formatter.class%
         public: false
 
-    guzzle.request_formatter:
+    emoe_guzzle.request_formatter:
         class: %guzzle.formatter.class%
         public: false
         arguments:
-            - %guzzle.request.format%
+            - %emoe_guzzle.request.format%
 
-    guzzle.response_formatter:
+    emoe_guzzle.response_formatter:
         class: %guzzle.formatter.class%
         public: false
         arguments:
-            - %guzzle.response.format%
+            - %emoe_guzzle.response.format%
 
-    guzzle.data_collector:
-        class: %guzzle.data_collector.class%
+    emoe_guzzle.data_collector:
+        class: %emoe_guzzle.data_collector.class%
         public: false
         arguments:
-            - @guzzle.log_adapter
-            - @guzzle.request_formatter
-            - @guzzle.response_formatter
+            - @emoe_guzzle.log_adapter
+            - @emoe_guzzle.request_formatter
+            - @emoe_guzzle.response_formatter
         tags:
             - { name: data_collector, template: "EmoeGuzzleBundle:Collector:guzzle", id: "guzzle" }
 

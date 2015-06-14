@@ -1,7 +1,7 @@
 {
     "name": "e-moe/guzzle-bundle",
     "type": "symfony-bundle",
-    "description": "Integrates Guzzle into your Symfony2 application",
+    "description": "Integrates Guzzle 6 into your Symfony2 application",
     "keywords": ["guzzle", "bundle", "http", "http client", "rest", "client", "web service", "curl", "api"],
     "homepage": "https://github.com/e-moe/xxx",
     "license": "MIT",
@@ -37,7 +37,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-master": "1.1-dev"
         }
     }
 }
