@@ -49,10 +49,19 @@ $client   = $this->get('guzzle.client');
 $response = $client->get('http://example.com');
 ```
 
-## Symfony Debug Toolbar / Profiler
+## Features
 
-<img src="/Resources/doc/img/profiler.png" alt="Guzzle Requests" title="Symfony Debug Toolbar - Guzzle Logs" style="width: 360px" />
+### Symfony Debug Profiler
 
+<img src="/Resources/doc/img/profiler.png" alt="Guzzle Requests" title="Symfony Debug Toolbar - Guzzle Logs" style="max-width: 360px" />
+
+### Symfony Debug Timeline
+
+<img src="/Resources/doc/img/timeline.png" alt="Guzzle Timeline Integration" title="Symfony Debug Toolbar - Timeline Integration" style="max-width: 360px" />
+
+### Symfony Debug Toolbar
+
+<img src="/Resources/doc/img/toolbar.png" alt="Guzzle Toolbar Integration" title="Symfony Debug Toolbar Integration" style="max-width: 360px" />
 
 ## Suggestions
 Adding aliases:
