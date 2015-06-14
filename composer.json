@@ -1,5 +1,5 @@
 {
-    "name": "e-moe/guzzle-bundle",
+    "name": "e-moe/guzzle6-bundle",
     "type": "symfony-bundle",
     "description": "Integrates Guzzle 6 into your Symfony2 application",
     "keywords": ["guzzle", "bundle", "http", "http client", "rest", "client", "web service", "curl", "api"],
