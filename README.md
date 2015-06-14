@@ -63,6 +63,11 @@ $response = $client->get('http://example.com');
 
 <img src="/Resources/doc/img/toolbar.png" alt="Guzzle Toolbar Integration" title="Symfony Debug Toolbar Integration" style="max-width: 360px" />
 
+### Symfony Debug Logs (Monolog Integration)
+
+<img src="/Resources/doc/img/logs.png" alt="Guzzle Monolog Logs" title="Symfony Debug Toolbar Logs" style="max-width: 360px" />
+
+
 ## Suggestions
 Adding aliases:
 If you want to use different names for provided services you can use aliases. This is a good idea if you don't want 
