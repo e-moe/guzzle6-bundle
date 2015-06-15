@@ -8,6 +8,7 @@
 This bundle integrates [Guzzle 6.x][guzzle] into Symfony. Guzzle is a PHP framework for building RESTful web service clients.
 
 ## Requirements
+
  - PHP 5.5 or above ([Guzzle 6][guzzle] requrenment)
  - [Guzzle PHP Framework][guzzle] (included by composer)
 
@@ -31,6 +32,7 @@ To use the newest (maybe unstable) version please add following into your compos
 
 
 ## Usage
+
 Load bundle in AppKernel.php:
 ``` php
 new Emoe\GuzzleBundle\EmoeGuzzleBundle(),
@@ -69,6 +71,7 @@ $response = $client->get('http://example.com');
 
 
 ## Suggestions
+
 Adding aliases:
 If you want to use different names for provided services you can use aliases. This is a good idea if you don't want 
 have any dependency to guzzle in your service name.
@@ -78,6 +81,23 @@ services:
        alias: guzzle.client
 ```
 
+Creating multiple clients:
+If you want to have different Guzzle clients in your application all you need is to define them in services file and
+add "guzzle.client" tag to turn on Symfony integration (Debug toolbar, logs, so on..).
+``` yaml
+services:
+    guzzle.client_one:
+        class: %guzzle.client.class%
+        tags:
+            - { name: guzzle.client }
+
+    guzzle.client_two:
+        class: %guzzle.client.class%
+        tags:
+            - { name: guzzle.client }
+```
+
+
 ## Authors
  - Nikolay Labinskiy aka e-moe
  
@@ -86,6 +106,7 @@ Inspired by Chris Wilkinson's and Florian Preusner's GuzzleBundles ([1][misd-guz
 See also the list of [contributors][contributors] who participated in this project.
 
 ## License
+
 This bundle is released under the [MIT license](Resources/meta/LICENSE)
 
 [guzzle]:       http://guzzlephp.org/
