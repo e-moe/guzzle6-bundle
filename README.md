@@ -43,6 +43,7 @@ Configuration in config.yml:
 emoe_guzzle:
     log:
         enabled: true # Logging requests to Monolog
+        format: "Guzzle: [{ts}] \"{method} {uri} HTTP/{version}\" {code}" # Optional log format customization
 ```
 
 Using services in controller:
