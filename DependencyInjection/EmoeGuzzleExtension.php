@@ -25,6 +25,12 @@ class EmoeGuzzleExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-        $container->setParameter('guzzle.log.enabled', $config['log']['enabled']);
+        $container->setParameter('emoe_guzzle.log.enabled', $config['log']['enabled']);
+
+        $logFormat = $config['log']['format'];
+        if (in_array($logFormat, ['CLF', 'DEBUG', 'SHORT'])) {
+            $logFormat = constant('GuzzleHttp\\MessageFormatter::'.$logFormat);
+        }
+        $container->setParameter('emoe_guzzle.log.format', $logFormat);
     }
 }

@@ -1,13 +1,12 @@
 parameters:
     emoe_guzzle.monolog_log_adapter.class: Emoe\GuzzleBundle\Log\MonologLogAdapter
-    emoe_guzzle.monolog.format: "Guzzle: [{ts}] \"{method} {uri} HTTP/{version}\" {code}"
 
 services:
     emoe_guzzle.monolog_formatter:
         class: %guzzle.formatter.class%
         public: false
         arguments:
-            - %emoe_guzzle.monolog.format%
+            - %emoe_guzzle.log.format%
 
     emoe_guzzle.monolog_log_adapter:
         class: %emoe_guzzle.monolog_log_adapter.class%

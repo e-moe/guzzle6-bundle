@@ -14,7 +14,7 @@ class MonologCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (false === $container->has('monolog.logger') || false === $container->getParameter('guzzle.log.enabled')) {
+        if (false === $container->has('monolog.logger') || false === $container->getParameter('emoe_guzzle.log.enabled')) {
             return;
         }
 

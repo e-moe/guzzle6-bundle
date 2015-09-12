@@ -26,6 +26,9 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('log')
                     ->canBeDisabled()
                     ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('format')->defaultValue('CLF')->end()
+                    ->end()
                 ->end()
             ->end()
         ;
