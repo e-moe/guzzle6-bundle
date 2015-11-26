@@ -11,6 +11,7 @@ This bundle integrates [Guzzle 6.x][guzzle] into Symfony. Guzzle is a PHP framew
 
  - PHP 5.5 or above ([Guzzle 6][guzzle] requrenment)
  - [Guzzle PHP Framework][guzzle] (included by composer)
+ - Symfony 2.7 or above (including Symfony 3.0)
 
  
 ## Installation
@@ -56,19 +57,19 @@ $response = $client->get('http://example.com');
 
 ### Symfony Debug Profiler
 
-<img src="/Resources/doc/img/profiler.png" alt="Guzzle Requests" title="Symfony Debug Toolbar - Guzzle Logs" style="max-width: 360px" />
+<img src="/Resources/doc/img/profiler.png" alt="Guzzle Requests" title="Symfony Debug Toolbar - Guzzle Logs" />
 
 ### Symfony Debug Timeline
 
-<img src="/Resources/doc/img/timeline.png" alt="Guzzle Timeline Integration" title="Symfony Debug Toolbar - Timeline Integration" style="max-width: 360px" />
+<img src="/Resources/doc/img/timeline.png" alt="Guzzle Timeline Integration" title="Symfony Debug Toolbar - Timeline Integration" />
 
 ### Symfony Debug Toolbar
 
-<img src="/Resources/doc/img/toolbar.png" alt="Guzzle Toolbar Integration" title="Symfony Debug Toolbar Integration" style="max-width: 360px" />
+<img src="/Resources/doc/img/toolbar.png" alt="Guzzle Toolbar Integration" title="Symfony Debug Toolbar Integration" />
 
 ### Symfony Debug Logs (Monolog Integration)
 
-<img src="/Resources/doc/img/logs.png" alt="Guzzle Monolog Logs" title="Symfony Debug Toolbar Logs" style="max-width: 360px" />
+<img src="/Resources/doc/img/logs.png" alt="Guzzle Monolog Logs" title="Symfony Debug Toolbar Logs" />
 
 
 ## Suggestions

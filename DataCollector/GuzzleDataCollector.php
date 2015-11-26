@@ -21,6 +21,13 @@ class GuzzleDataCollector extends DataCollector
     /** @var MessageFormatter */
     protected $responseFormatter;
 
+    /**
+     * GuzzleDataCollector constructor.
+     *
+     * @param ArrayLogAdapter $logAdapter
+     * @param MessageFormatter $requestFormatter
+     * @param MessageFormatter $responseFormatter
+     */
     public function __construct(
         ArrayLogAdapter $logAdapter,
         MessageFormatter $requestFormatter,
@@ -32,6 +39,9 @@ class GuzzleDataCollector extends DataCollector
         $this->data['requests'] = array();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
         foreach ($this->logAdapter->getLogs() as $log) {
@@ -51,22 +61,47 @@ class GuzzleDataCollector extends DataCollector
             $datum['time'] = $log['extras']['time'];
             $datum['request'] = $this->requestFormatter->format($guzzleRequest);
             $datum['response'] = $this->responseFormatter->format($guzzleRequest, $guzzleResponse);
-            $datum['is_error'] = $this->isError($log['extras']['response']);
+            $datum['is_error'] = $this->isError($guzzleResponse);
+            $datum['status_code'] = $guzzleResponse->getStatusCode();
+            $datum['method'] = $guzzleRequest->getMethod();
 
             $this->data['requests'][$requestId] = $datum;
         }
     }
 
+    /**
+     * @param ResponseInterface $response
+     * @return bool Returns true if response code is 4xx or 5xx
+     */
     protected function isError(ResponseInterface $response)
     {
         return $response->getStatusCode() >= 400 && $response->getStatusCode() < 600;
     }
 
+    /**
+     * @return array List of requests with 4xx or 5xx response codes
+     */
+    public function getErrorRequests()
+    {
+        return array_filter(
+            $this->getRequests(),
+            function ($item) {
+                return $item['is_error'];
+            }
+        );
+    }
+
+    /**
+     * @return array List of all requests
+     */
     public function getRequests()
     {
         return $this->data['requests'];
     }
 
+    /**
+     * @return int Total requests duration
+     */
     public function getTotalDuration()
     {
         return array_reduce(
@@ -78,6 +113,9 @@ class GuzzleDataCollector extends DataCollector
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'guzzle';

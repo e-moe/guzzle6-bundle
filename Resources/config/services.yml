@@ -21,15 +21,15 @@ services:
         class: %emoe_guzzle.request_profiler_middlware.class%
         public: false
         arguments:
-            - @debug.stopwatch
+            - '@debug.stopwatch'
 
     emoe_guzzle.request_logger_middleware:
         class: %emoe_guzzle.request_logger_middlware.class%
         public: false
         arguments:
-            - @emoe_guzzle.log_adapter
-            - @emoe_guzzle.stopwatch
-            - @emoe_guzzle.message_formatter
+            - '@emoe_guzzle.log_adapter'
+            - '@emoe_guzzle.stopwatch'
+            - '@emoe_guzzle.message_formatter'
 
     emoe_guzzle.stopwatch:
         class: %emoe_guzzle.stopwatch.class%
@@ -59,9 +59,9 @@ services:
         class: %emoe_guzzle.data_collector.class%
         public: false
         arguments:
-            - @emoe_guzzle.log_adapter
-            - @emoe_guzzle.request_formatter
-            - @emoe_guzzle.response_formatter
+            - '@emoe_guzzle.log_adapter'
+            - '@emoe_guzzle.request_formatter'
+            - '@emoe_guzzle.response_formatter'
         tags:
             - { name: data_collector, template: "EmoeGuzzleBundle:Collector:guzzle", id: "guzzle" }
 
