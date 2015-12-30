@@ -2,10 +2,8 @@
 
 namespace Emoe\GuzzleBundle\DependencyInjection\Compiler;
 
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader;
 
 class MonologCompilerPass implements CompilerPassInterface
 {
