@@ -18,9 +18,6 @@ class MonologCompilerPass implements CompilerPassInterface
             return;
         }
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../../Resources/config'));
-        $loader->load('monolog.yml');
-
         $monologMiddleware = $container->findDefinition('emoe_guzzle.request_monolog_middleware');
 
         foreach ($container->findTaggedServiceIds('guzzle.client') as $id => $attributes) {

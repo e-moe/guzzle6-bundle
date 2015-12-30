@@ -24,6 +24,7 @@ class EmoeGuzzleExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+        $loader->load('monolog.yml');
 
         $container->setParameter('emoe_guzzle.log.enabled', $config['log']['enabled']);
 
