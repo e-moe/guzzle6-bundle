@@ -1,0 +1,39 @@
+language: php
+
+matrix:
+  include:
+    - php: 5.5
+      env: deps=low
+    - php: 5.6
+      env: deps=low
+    - php: hhvm
+      env: deps=low
+    - php: 7.0
+      env: deps=low
+    - php: 5.5
+    - php: 5.6
+    - php: hhvm
+    - php: 7.0
+  fast_finish: true
+
+install:
+  - composer self-update
+  - if [ "$deps" = "no" ]; then composer --prefer-stable --no-interaction update; fi;
+  - if [ "$deps" = "low" ]; then composer --prefer-lowest --prefer-stable --no-interaction update; fi;
+
+env:
+  global:
+    - SYMFONY_DEPRECATIONS_HELPER=strict
+    - deps=no
+
+script:
+  - ./vendor/bin/phpunit
+  - ./vendor/bin/phpcs --standard=PSR2 src/
+  - ./vendor/bin/phpcpd src/
+  - ./vendor/bin/phpmd src text cleancode,codesize,controversial,design,naming,unusedcode
+
+cache:
+  directories:
+    - vendor
+
+sudo: false

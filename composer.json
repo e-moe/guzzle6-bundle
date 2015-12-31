@@ -1,7 +1,7 @@
 {
     "name": "e-moe/guzzle6-bundle",
     "type": "symfony-bundle",
-    "description": "Integrates Guzzle 6 into your Symfony2 application",
+    "description": "Integrates Guzzle 6 into your Symfony application",
     "keywords": ["guzzle", "bundle", "http", "http client", "rest", "client", "web service", "curl", "api"],
     "homepage": "https://github.com/e-moe/guzzle6-bundle",
     "license": "MIT",
@@ -25,19 +25,20 @@
     "conflict": {
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.7",
+        "phpunit/phpunit": "~5.1",
         "symfony/monolog-bundle": "~2.7",
-        "squizlabs/php_codesniffer": "^2.3",
-        "phpmd/phpmd": "^2.2"
+        "squizlabs/php_codesniffer": "~2.5",
+        "phpmd/phpmd": "~2.3",
+        "sebastian/phpcpd": "~2.0"
     },
     "autoload": {
         "psr-4": {
-            "Emoe\\GuzzleBundle\\": ""
+            "Emoe\\GuzzleBundle\\": "src"
         }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.1-dev"
+            "dev-master": "1.2-dev"
         }
     }
 }

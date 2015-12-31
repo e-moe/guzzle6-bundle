@@ -21,7 +21,7 @@ class ClientCompilerPass implements CompilerPassInterface
         $loggerMiddleware = $container->findDefinition('emoe_guzzle.request_logger_middleware');
         $loggerMiddleware->addMethodCall('attachMiddleware', [$stack]);
 
-        foreach ($container->findTaggedServiceIds('guzzle.client') as $id => $attributes) {
+        foreach (array_keys($container->findTaggedServiceIds('guzzle.client')) as $id) {
             $definition = $container->getDefinition($id);
             $arguments = $definition->getArguments();
             if (isset($arguments[0]['handler'])) {

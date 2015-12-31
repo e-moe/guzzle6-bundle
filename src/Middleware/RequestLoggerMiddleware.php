@@ -39,6 +39,7 @@ class RequestLoggerMiddleware implements MiddlewareInterface
 
     /**
      * @inheritdoc
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function attachMiddleware(HandlerStack $stack)
     {

@@ -12,13 +12,13 @@ class MonologCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (false === $container->has('monolog.logger') || false === $container->getParameter('emoe_guzzle.log.enabled')) {
+        if (!($container->has('monolog.logger') && $container->getParameter('emoe_guzzle.log.enabled'))) {
             return;
         }
 
         $monologMiddleware = $container->findDefinition('emoe_guzzle.request_monolog_middleware');
 
-        foreach ($container->findTaggedServiceIds('guzzle.client') as $id => $attributes) {
+        foreach (array_keys($container->findTaggedServiceIds('guzzle.client')) as $id) {
             $definition = $container->getDefinition($id);
             $arguments = $definition->getArguments();
             if (!isset($arguments[0]['handler'])) {
