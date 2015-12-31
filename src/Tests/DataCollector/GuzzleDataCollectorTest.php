@@ -105,10 +105,8 @@ class GuzzleDataCollectorTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->getDurationLogs($times));
 
         $this->requestFormatter->expects($this->exactly(count($times)))->method('format');
-            //->willReturn('test request');
 
         $this->responseFormatter->expects($this->exactly(count($times)))->method('format');
-            //->willReturn('test response');
 
         $response  = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
         $request   = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();
@@ -116,6 +114,26 @@ class GuzzleDataCollectorTest extends \PHPUnit_Framework_TestCase
         $this->dataCollector->collect($request, $response);
 
         $this->assertEquals($expected, $this->dataCollector->getTotalDuration());
+    }
+
+    /**
+     * @dataProvider errorRequestsProvider
+     */
+    public function testGetErrorRequests(array $logs, $expected)
+    {
+        $this->logAdapter->expects($this->once())
+            ->method('getLogs')
+            ->willReturn($logs);
+
+        $this->requestFormatter->expects($this->atMost(count($logs)))->method('format');
+        $this->responseFormatter->expects($this->atMost(count($logs)))->method('format');
+
+        $response  = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
+        $request   = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();
+
+        $this->dataCollector->collect($request, $response);
+
+        $this->assertCount($expected, $this->dataCollector->getErrorRequests());
     }
 
     public function totalDurationProvider()
@@ -142,5 +160,62 @@ class GuzzleDataCollectorTest extends \PHPUnit_Framework_TestCase
             ];
         }
         return $logs;
+    }
+
+    public function errorRequestsProvider()
+    {
+        $guzzleRequestOne = $this->getMockBuilder('GuzzleHttp\Psr7\Request')->disableOriginalConstructor()->getMock();
+        $guzzleRequestTwo = $this->getMockBuilder('GuzzleHttp\Psr7\Request')->disableOriginalConstructor()->getMock();
+        $guzzleRequestThree = $this->getMockBuilder('GuzzleHttp\Psr7\Request')->disableOriginalConstructor()->getMock();
+
+        $guzzleResponseOK = $this->getMockBuilder('GuzzleHttp\Psr7\Response')->getMock();
+        $guzzleResponseOK->expects($this->any())
+            ->method('getStatusCode')
+            ->willReturn(Response::HTTP_OK);
+
+        $guzzleResponseErr = $this->getMockBuilder('GuzzleHttp\Psr7\Response')->getMock();
+        $guzzleResponseErr->expects($this->any())
+            ->method('getStatusCode')
+            ->willReturn(Response::HTTP_NOT_FOUND);
+
+        return [
+            [
+                [
+                    [
+                        'message' => 'test message',
+                        'extras' => [
+                            'request' => $guzzleRequestOne,
+                            'response' => $guzzleResponseOK,
+                            'time' => 42,
+                        ],
+                    ],
+                    [
+                        'message' => 'test message',
+                        'extras' => [
+                            'request' => $guzzleRequestOne,
+                            'response' => $guzzleResponseOK,
+                            'time' => 42,
+                        ],
+                    ],
+                    [
+                        'message' => 'test message',
+                        'extras' => [
+                            'request' => $guzzleRequestTwo,
+                            'response' => $guzzleResponseErr,
+                            'time' => 42,
+                        ],
+                    ],
+                    [
+                        'message' => 'test message',
+                        'extras' => [
+                            'request' => $guzzleRequestThree,
+                            'response' => $guzzleResponseErr,
+                            'time' => 42,
+                        ],
+                    ],
+                ],
+                2
+            ]
+        ];
     }
 }
