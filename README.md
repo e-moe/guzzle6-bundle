@@ -5,6 +5,7 @@
 [![Latest Unstable Version](https://poser.pugx.org/e-moe/guzzle6-bundle/v/unstable)](https://packagist.org/packages/e-moe/guzzle6-bundle)
 [![License](https://poser.pugx.org/e-moe/guzzle6-bundle/license)](https://packagist.org/packages/e-moe/guzzle6-bundle)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/b78325e0-a85f-477a-bd98-13ab1a551742/mini.png)](https://insight.sensiolabs.com/projects/b78325e0-a85f-477a-bd98-13ab1a551742)
+[![Build Status](https://travis-ci.org/e-moe/guzzle6-bundle.svg?branch=master)](https://travis-ci.org/e-moe/guzzle6-bundle)
 
 This bundle integrates [Guzzle 6.x][guzzle] into Symfony. Guzzle is a PHP framework for building RESTful web service clients.
 
