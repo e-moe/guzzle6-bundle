@@ -59,19 +59,19 @@ $response = $client->get('http://example.com');
 
 ### Symfony Debug Profiler
 
-<img src="/Resources/doc/img/profiler.png" alt="Guzzle Requests" title="Symfony Debug Toolbar - Guzzle Logs" />
+<img src="/src/Resources/doc/img/profiler.png" alt="Guzzle Requests" title="Symfony Debug Toolbar - Guzzle Logs" />
 
 ### Symfony Debug Timeline
 
-<img src="/Resources/doc/img/timeline.png" alt="Guzzle Timeline Integration" title="Symfony Debug Toolbar - Timeline Integration" />
+<img src="/src/Resources/doc/img/timeline.png" alt="Guzzle Timeline Integration" title="Symfony Debug Toolbar - Timeline Integration" />
 
 ### Symfony Debug Toolbar
 
-<img src="/Resources/doc/img/toolbar.png" alt="Guzzle Toolbar Integration" title="Symfony Debug Toolbar Integration" />
+<img src="/src/Resources/doc/img/toolbar.png" alt="Guzzle Toolbar Integration" title="Symfony Debug Toolbar Integration" />
 
 ### Symfony Debug Logs (Monolog Integration)
 
-<img src="/Resources/doc/img/logs.png" alt="Guzzle Monolog Logs" title="Symfony Debug Toolbar Logs" />
+<img src="/src/Resources/doc/img/logs.png" alt="Guzzle Monolog Logs" title="Symfony Debug Toolbar Logs" />
 
 
 ## Suggestions
