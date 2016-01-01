@@ -33,6 +33,9 @@ script:
   - ./vendor/bin/phpcpd src/
   - ./vendor/bin/phpmd src text cleancode,codesize,controversial,design,naming,unusedcode
 
+after_success:
+  - travis_retry php vendor/bin/coveralls
+
 cache:
   directories:
     - vendor
