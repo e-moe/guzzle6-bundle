@@ -25,6 +25,11 @@ class ClientCompilerPass implements CompilerPassInterface
             $stack = $bundleStack;
             $definition = $container->getDefinition($id);
             $arguments = $definition->getArguments();
+
+            if (isset($arguments[0]) && is_string($arguments[0])) {
+                $arguments[0] = $container->getParameter(str_replace('%', '', $arguments[0]));
+            }
+
             if (isset($arguments[0]['handler'])) {
                 $stack = $arguments[0]['handler'];
                 $profilerMiddleware->addMethodCall('attachMiddleware', [$stack]);
