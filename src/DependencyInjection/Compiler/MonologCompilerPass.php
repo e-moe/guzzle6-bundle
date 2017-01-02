@@ -16,16 +16,16 @@ class MonologCompilerPass implements CompilerPassInterface
             return;
         }
 
+        $bundleStack = $container->findDefinition('emoe_guzzle.handler_stack');
         $monologMiddleware = $container->findDefinition('emoe_guzzle.request_monolog_middleware');
+        $monologMiddleware->addMethodCall('attachMiddleware', [$bundleStack]);
 
         foreach (array_keys($container->findTaggedServiceIds('guzzle.client')) as $id) {
             $definition = $container->getDefinition($id);
             $arguments = $definition->getArguments();
             if (!isset($arguments[0]['handler'])) {
-                continue;
+                $arguments[0]['handler'] = $bundleStack;
             }
-            $stack = $arguments[0]['handler'];
-            $monologMiddleware->addMethodCall('attachMiddleware', [$stack]);
             $arguments[0]['monolog_middleware'] = $monologMiddleware;
             $definition->setArguments($arguments);
         }
