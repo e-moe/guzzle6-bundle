@@ -17,6 +17,10 @@ class MonologCompilerClassTest extends \PHPUnit_Framework_TestCase
         $container->has('monolog.logger')->willReturn($hasLogger);
         $container->getParameter('emoe_guzzle.log.enabled')->willReturn($hasLogger);
 
+        if ($hasLogger) {
+            $container->findDefinition('emoe_guzzle.handler_stack')->shouldBeCalled();
+        }
+
         $monologMiddleware = $this->prophesize('Symfony\Component\DependencyInjection\Definition');
         $monologMiddleware->addMethodCall('attachMiddleware', Argument::type('array'));
 
@@ -25,16 +29,22 @@ class MonologCompilerClassTest extends \PHPUnit_Framework_TestCase
         );
 
         $container->findTaggedServiceIds('guzzle.client')->willReturn([
-            'test_service_id' => 'test service'
+            'test_service_id_1' => 'test service #1',
+            'test_service_id_2' => 'test service #2',
         ]);
 
-        $testService = $this->prophesize('Symfony\Component\DependencyInjection\Definition');
-        $testService->getArguments()->willReturn($hasHandler ? [['handler' => 'test handler']] : []);
-        if ($hasLogger && $hasHandler) {
-            $testService->setArguments(Argument::type('array'))->shouldBeCalled();
+        $testService1 = $this->prophesize('Symfony\Component\DependencyInjection\Definition');
+        $testService1->getArguments()->willReturn($hasHandler ? [['handler' => 'test handler']] : []);
+        $testService2 = $this->prophesize('Symfony\Component\DependencyInjection\Definition');
+        $testService2->getArguments()->willReturn($hasHandler ? [['handler' => 'test handler #2']] : []);
+
+        if ($hasLogger) {
+            $testService1->setArguments(Argument::type('array'))->shouldBeCalled();
+            $testService2->setArguments(Argument::type('array'))->shouldBeCalled();
         }
 
-        $container->getDefinition('test_service_id')->willReturn($testService->reveal());
+        $container->getDefinition('test_service_id_1')->willReturn($testService1->reveal());
+        $container->getDefinition('test_service_id_2')->willReturn($testService2->reveal());
 
         $compilerPass = new MonologCompilerPass();
         $compilerPass->process($container->reveal());
