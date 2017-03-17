@@ -38,11 +38,11 @@
         </p>
     {% else %}
         <ul class="alt">
-            {% for i, request in collector.requests %}
-                <li class="{{ i is odd ? 'odd' : 'even' }} {% if request.is_error %}error{% endif %}">
+            {% for request in collector.requests %}
+                <li class="{{ loop.index0 is odd ? 'odd' : 'even' }} {% if request.is_error %}error{% endif %}">
                     <div>
                         <a href="#" onclick="return explain(this);" style="text-decoration: none;" title="Explains"
-                           data-target-id="explain-{{ i }}">
+                           data-target-id="explain-{{ loop.index0 }}">
                             <img alt="+" src="{{ asset('bundles/framework/images/blue_picto_more.gif') }}"
                                  style="display: inline;"/>
                             <img alt="-" src="{{ asset('bundles/framework/images/blue_picto_less.gif') }}"
@@ -51,7 +51,7 @@
                         <code>{{ request.message }} ({{ request.time|number_format }} ms)</code>
                     </div>
 
-                    <div id="explain-{{ i }}" style="display:none; padding-top: 1em;">
+                    <div id="explain-{{ loop.index0 }}" style="display:none; padding-top: 1em;">
                         <small>
                             <strong>Request:</strong>
                         </small>
