@@ -1,30 +1,21 @@
 parameters:
-    guzzle.client.class: GuzzleHttp\Client
-    guzzle.handler_stack.class: GuzzleHttp\HandlerStack
-    guzzle.formatter.class: GuzzleHttp\MessageFormatter
-
-    emoe_guzzle.request_profiler_middlware.class: Emoe\GuzzleBundle\Middleware\RequestProfilerMiddleware
-    emoe_guzzle.request_logger_middlware.class: Emoe\GuzzleBundle\Middleware\RequestLoggerMiddleware
-    emoe_guzzle.log_adapter.class: Emoe\GuzzleBundle\Log\ArrayLogAdapter
-    emoe_guzzle.data_collector.class: Emoe\GuzzleBundle\DataCollector\GuzzleDataCollector
-    emoe_guzzle.stopwatch.class: Symfony\Component\Stopwatch\Stopwatch
     emoe_guzzle.request.format: '{request}'
     emoe_guzzle.response.format: '{response}'
 
 services:
     emoe_guzzle.handler_stack:
-        class: '%guzzle.handler_stack.class%'
+        class: 'GuzzleHttp\HandlerStack'
         public: false
-        factory: ['%guzzle.handler_stack.class%', create]
+        factory: ['GuzzleHttp\HandlerStack', create]
 
     emoe_guzzle.request_profiler_middleware:
-        class: '%emoe_guzzle.request_profiler_middlware.class%'
+        class: 'Emoe\GuzzleBundle\Middleware\RequestProfilerMiddleware'
         public: false
         arguments:
             - '@debug.stopwatch'
 
     emoe_guzzle.request_logger_middleware:
-        class: '%emoe_guzzle.request_logger_middlware.class%'
+        class: 'Emoe\GuzzleBundle\Middleware\RequestLoggerMiddleware'
         public: false
         arguments:
             - '@emoe_guzzle.log_adapter'
@@ -32,31 +23,31 @@ services:
             - '@emoe_guzzle.message_formatter'
 
     emoe_guzzle.stopwatch:
-        class: '%emoe_guzzle.stopwatch.class%'
+        class: 'Symfony\Component\Stopwatch\Stopwatch'
         public: false
 
     emoe_guzzle.log_adapter:
-        class: '%emoe_guzzle.log_adapter.class%'
+        class: 'Emoe\GuzzleBundle\Log\ArrayLogAdapter'
         public: false
 
     emoe_guzzle.message_formatter:
-        class: '%guzzle.formatter.class%'
+        class: 'GuzzleHttp\MessageFormatter'
         public: false
 
     emoe_guzzle.request_formatter:
-        class: '%guzzle.formatter.class%'
+        class: 'GuzzleHttp\MessageFormatter'
         public: false
         arguments:
             - '%emoe_guzzle.request.format%'
 
     emoe_guzzle.response_formatter:
-        class: '%guzzle.formatter.class%'
+        class: 'GuzzleHttp\MessageFormatter'
         public: false
         arguments:
             - '%emoe_guzzle.response.format%'
 
     emoe_guzzle.data_collector:
-        class: '%emoe_guzzle.data_collector.class%'
+        class: 'Emoe\GuzzleBundle\DataCollector\GuzzleDataCollector'
         public: false
         arguments:
             - '@emoe_guzzle.log_adapter'
@@ -66,6 +57,6 @@ services:
             - { name: data_collector, template: 'EmoeGuzzleBundle:Collector:guzzle', id: 'guzzle' }
 
     guzzle.client:
-        class: '%guzzle.client.class%'
+        class: 'GuzzleHttp\Client'
         tags:
             - { name: guzzle.client }

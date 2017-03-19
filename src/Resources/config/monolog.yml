@@ -1,21 +1,18 @@
-parameters:
-    emoe_guzzle.monolog_log_adapter.class: Emoe\GuzzleBundle\Log\MonologLogAdapter
-
 services:
     emoe_guzzle.monolog_formatter:
-        class: '%guzzle.formatter.class%'
+        class: 'GuzzleHttp\MessageFormatter'
         public: false
         arguments:
             - '%emoe_guzzle.log.format%'
 
     emoe_guzzle.monolog_log_adapter:
-        class: '%emoe_guzzle.monolog_log_adapter.class%'
+        class: 'Emoe\GuzzleBundle\Log\MonologLogAdapter'
         public: false
         arguments:
             - '@monolog.logger'
 
     emoe_guzzle.request_monolog_middleware:
-        class: '%emoe_guzzle.request_logger_middlware.class%'
+        class: 'Emoe\GuzzleBundle\Middleware\RequestLoggerMiddleware'
         public: false
         arguments:
             - '@emoe_guzzle.monolog_log_adapter'
