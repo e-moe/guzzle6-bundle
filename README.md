@@ -48,7 +48,7 @@ Configuration in config.yml:
 emoe_guzzle:
     log:
         enabled: true # Logging requests to Monolog
-        format: "Guzzle: [{ts}] \"{method} {uri} HTTP/{version}\" {code}" # Optional log format customization
+        format: 'Guzzle: [{ts}] "{method} {uri} HTTP/{version}" {code}' # Optional log format customization
 ```
 
 Using services in controller:
@@ -93,12 +93,12 @@ add "guzzle.client" tag to turn on Symfony integration (Debug toolbar, logs, so 
 ``` yaml
 services:
     guzzle.client_one:
-        class: %guzzle.client.class%
+        class: GuzzleHttp\Client
         tags:
             - { name: guzzle.client }
 
     guzzle.client_two:
-        class: %guzzle.client.class%
+        class: GuzzleHttp\Client
         tags:
             - { name: guzzle.client }
 ```
