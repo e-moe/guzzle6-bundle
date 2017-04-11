@@ -113,7 +113,7 @@ See also the list of [contributors][contributors] who participated in this proje
 
 ## License
 
-This bundle is released under the [MIT license](Resources/meta/LICENSE)
+This bundle is released under the [MIT license](src/Resources/meta/LICENSE)
 
 [guzzle]:       http://guzzlephp.org/
 [packagist]:    https://packagist.org/packages/e-moe/guzzle6-bundle
