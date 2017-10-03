@@ -60,7 +60,7 @@
             <p>No requests sent.</p>
         </div>
     {% else %}
-        {% set methods = ['GET', 'POST', 'PUT', 'DELTE', 'OTHER'] %}
+        {% set methods = ['GET', 'POST', 'PUT', 'DELETE', 'OTHER'] %}
         {# sort collected logs in groups #}
         {% set groups = {} %}
         {% for request in collector.requests %}
