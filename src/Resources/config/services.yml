@@ -58,5 +58,6 @@ services:
 
     guzzle.client:
         class: 'GuzzleHttp\Client'
+        public: true
         tags:
             - { name: guzzle.client }
