@@ -12,7 +12,7 @@ services:
         class: 'Emoe\GuzzleBundle\Middleware\RequestProfilerMiddleware'
         public: false
         arguments:
-            - '@debug.stopwatch'
+            - '@?debug.stopwatch'
 
     emoe_guzzle.request_logger_middleware:
         class: 'Emoe\GuzzleBundle\Middleware\RequestLoggerMiddleware'
@@ -54,7 +54,7 @@ services:
             - '@emoe_guzzle.request_formatter'
             - '@emoe_guzzle.response_formatter'
         tags:
-            - { name: data_collector, template: 'EmoeGuzzleBundle:Collector:guzzle', id: 'guzzle' }
+            - { name: data_collector, template: '@EmoeGuzzle/Collector/guzzle.html.twig', id: 'guzzle' }
 
     guzzle.client:
         class: 'GuzzleHttp\Client'

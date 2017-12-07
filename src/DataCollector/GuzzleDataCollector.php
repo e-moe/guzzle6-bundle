@@ -120,4 +120,12 @@ class GuzzleDataCollector extends DataCollector
     {
         return 'guzzle';
     }
+
+    /**
+     * Resets this data collector to its initial state.
+     */
+    public function reset()
+    {
+        $this->data = array();
+    }
 }
