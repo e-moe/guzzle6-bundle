@@ -136,6 +136,26 @@ class GuzzleDataCollectorTest extends \PHPUnit_Framework_TestCase
         $this->assertCount($expected, $this->dataCollector->getErrorRequests());
     }
 
+    public function testReset()
+    {
+        $this->logAdapter->expects($this->once())
+            ->method('getLogs')
+            ->willReturn($this->getDurationLogs([42]));
+
+        $this->requestFormatter->expects($this->once())->method('format');
+
+        $this->responseFormatter->expects($this->once())->method('format');
+
+        $response  = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
+        $request   = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();
+
+        $this->dataCollector->collect($request, $response);
+
+        $this->assertCount(1, $this->dataCollector->getRequests());
+        $this->dataCollector->reset();
+        $this->assertCount(0, $this->dataCollector->getRequests());
+    }
+
     public function totalDurationProvider()
     {
         return [
