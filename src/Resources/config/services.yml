@@ -61,3 +61,6 @@ services:
         public: true
         tags:
             - { name: guzzle.client }
+    
+    GuzzleHttp\ClientInterface:
+        alias: 'guzzle.client'
