@@ -5,8 +5,6 @@ namespace Emoe\GuzzleBundle\Tests\DataCollector;
 use Emoe\GuzzleBundle\DataCollector\GuzzleDataCollector;
 use Emoe\GuzzleBundle\Log\ArrayLogAdapter;
 use GuzzleHttp\MessageFormatter;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class GuzzleDataCollectorTest extends \PHPUnit_Framework_TestCase

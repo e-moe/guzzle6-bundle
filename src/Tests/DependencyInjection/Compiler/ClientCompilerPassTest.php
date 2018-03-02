@@ -1,6 +1,6 @@
 <?php
 
-namespace Doctrine\Bundle\DoctrineBundle\Tests\DependencyInjection\Compiler;
+namespace Emoe\GuzzleBundle\Tests\DependencyInjection\Compiler;
 
 use Emoe\GuzzleBundle\DependencyInjection\Compiler\ClientCompilerPass;
 use Prophecy\Argument;

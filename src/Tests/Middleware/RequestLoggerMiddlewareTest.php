@@ -5,7 +5,6 @@ namespace Emoe\GuzzleBundle\Tests\Middleware;
 use Emoe\GuzzleBundle\Log\ArrayLogAdapter;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Promise\Promise;
 use Symfony\Component\Stopwatch\Stopwatch;
 use Emoe\GuzzleBundle\Middleware\RequestLoggerMiddleware;
 use GuzzleHttp\Client;
