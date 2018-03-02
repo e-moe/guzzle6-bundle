@@ -1,6 +1,6 @@
 <?php
 
-namespace Doctrine\Bundle\DoctrineBundle\Tests;
+namespace Emoe\GuzzleBundle\Tests;
 
 use Emoe\GuzzleBundle\EmoeGuzzleBundle;
 use Prophecy\Argument;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Doctrine\Bundle\DoctrineBundle\Tests\DependencyInjection;
+namespace Emoe\GuzzleBundle\Tests\DependencyInjection;
 
 use Emoe\GuzzleBundle\DependencyInjection\Configuration;
 use Symfony\Component\Config\Definition\Processor;

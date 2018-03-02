@@ -1,6 +1,6 @@
 <?php
 
-namespace Doctrine\Bundle\DoctrineBundle\Tests\Log;
+namespace Emoe\GuzzleBundle\Tests\Log;
 
 use Emoe\GuzzleBundle\Log\ArrayLogAdapter;
 
