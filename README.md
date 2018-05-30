@@ -43,7 +43,7 @@ Load bundle in AppKernel.php (should be done automatically if you are using Symf
 new Emoe\GuzzleBundle\EmoeGuzzleBundle(),
 ```
 
-Configuration in config.yml:
+Configuration in config.yml (optional):
 ``` yaml
 emoe_guzzle:
     log:
@@ -51,11 +51,20 @@ emoe_guzzle:
         format: 'Guzzle: [{ts}] "{method} {uri} HTTP/{version}" {code}' # Optional log format customization
 ```
 
-Using services in controller:
+Using Guzzle in controllers:
 ``` php
 $client   = $this->get('guzzle.client');
 $response = $client->get('http://example.com');
 ```
+
+Using Guzzle in your own services:
+``` yaml
+  application.my_service:
+    class: App\Service\MyService
+    arguments:
+      - "@guzzle.client"
+```
+or you can just use [autowire][autowire] feature with `GuzzleHttp\ClientInterface` type hint.
 
 ## Features
 
@@ -117,6 +126,7 @@ This bundle is released under the [MIT license](LICENSE)
 
 [guzzle]:       http://guzzlephp.org/
 [packagist]:    https://packagist.org/packages/e-moe/guzzle6-bundle
+[autowire]:     https://symfony.com/doc/current/service_container.html#the-autowire-option
 [contributors]: https://github.com/e-moe/guzzle6-bundle/graphs/contributors
 [misd-guzzle]:  https://github.com/misd-service-development/guzzle-bundle
 [8p]:           https://github.com/8p/GuzzleBundle
