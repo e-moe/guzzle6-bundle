@@ -50,6 +50,7 @@ emoe_guzzle:
         enabled: true # Logging requests to Monolog
         format: 'Guzzle: [{ts}] "{method} {uri} HTTP/{version}" {code}' # Optional log format customization
 ```
+see more about [log format syntax][log-format].
 
 Using Guzzle in controllers:
 ``` php
@@ -130,3 +131,4 @@ This bundle is released under the [MIT license](LICENSE)
 [contributors]: https://github.com/e-moe/guzzle6-bundle/graphs/contributors
 [misd-guzzle]:  https://github.com/misd-service-development/guzzle-bundle
 [8p]:           https://github.com/8p/GuzzleBundle
+[log-format]:   https://github.com/guzzle/guzzle/blob/master/src/MessageFormatter.php#L12
