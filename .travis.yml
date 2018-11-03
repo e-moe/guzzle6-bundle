@@ -21,8 +21,8 @@ before_install:
 
 install:
   - composer self-update
-  - if [ "$deps" = "no" ]; then composer --prefer-stable --no-interaction update; fi;
-  - if [ "$deps" = "low" ]; then composer --prefer-lowest --prefer-stable --no-interaction update; fi;
+  - if [ "$deps" = "no" ]; then COMPOSER_MEMORY_LIMIT=-1 composer --prefer-stable --no-interaction update; fi;
+  - if [ "$deps" = "low" ]; then COMPOSER_MEMORY_LIMIT=-1 composer --prefer-lowest --prefer-stable --no-interaction update; fi;
 
 env:
   global:
