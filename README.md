@@ -14,7 +14,6 @@ This bundle integrates [Guzzle 6.x][guzzle] into Symfony. Guzzle is a PHP framew
 ## Requirements
 
  - PHP 5.6 or above
- - [Guzzle PHP Framework][guzzle] (included by composer)
  - Symfony 2.7 or above (including Symfony 3.x, 4.x)
 
  
