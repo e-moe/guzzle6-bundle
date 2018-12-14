@@ -17,7 +17,7 @@ matrix:
   fast_finish: true
 
 before_install:
-  - composer config -g github-oauth.github.com $GITHUB_OAUTH_TOKEN
+  - composer config --global --auth github-oauth.github.com $GITHUB_OAUTH_TOKEN
 
 install:
   - composer self-update
