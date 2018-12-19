@@ -15,11 +15,18 @@ class Configuration implements ConfigurationInterface
 {
     /**
      * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.ElseExpression)
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('emoe_guzzle');
+        if (method_exists(TreeBuilder::class, 'getRootNode')) {
+            $treeBuilder = new TreeBuilder('my_config');
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $treeBuilder = new TreeBuilder();
+            $rootNode = $treeBuilder->root('emoe_guzzle');
+        }
 
         $rootNode
             ->children()
