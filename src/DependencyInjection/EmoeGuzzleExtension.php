@@ -30,7 +30,7 @@ class EmoeGuzzleExtension extends Extension
 
         $logFormat = $config['log']['format'];
         if (in_array($logFormat, ['CLF', 'DEBUG', 'SHORT'])) {
-            $logFormat = constant('GuzzleHttp\\MessageFormatter::'.$logFormat);
+            $logFormat = constant('GuzzleHttp\\MessageFormatter::' . $logFormat);
         }
         $container->setParameter('emoe_guzzle.log.format', $logFormat);
     }
