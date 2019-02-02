@@ -31,12 +31,12 @@ env:
 
 script:
   - ./vendor/bin/phpunit
-  - ./vendor/bin/phpcs --standard=PSR2 src/
+  - ./vendor/bin/phpcs --standard=PSR2,PSR12 src/
   - ./vendor/bin/phpcpd src/
   - ./vendor/bin/phpmd src text cleancode,codesize,controversial,design,naming,unusedcode
 
 after_success:
-  - travis_retry php vendor/bin/coveralls
+  - travis_retry php vendor/bin/php-coveralls
 
 cache:
   directories:
