@@ -12,7 +12,7 @@ class MonologLogAdapter extends AbstractLogAdapter
     /**
      * syslog to Monolog mappings
      */
-    private static $mapping = array(
+    private $mapping = array(
         LOG_DEBUG   => Logger::DEBUG,
         LOG_INFO    => Logger::INFO,
         LOG_WARNING => Logger::WARNING,
@@ -28,6 +28,6 @@ class MonologLogAdapter extends AbstractLogAdapter
 
     public function log($message, $priority = LOG_INFO, $extras = array())
     {
-        $this->log->addRecord(self::$mapping[$priority], $message, $extras);
+        $this->log->addRecord($this->mapping[$priority], $message, $extras);
     }
 }

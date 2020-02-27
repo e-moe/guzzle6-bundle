@@ -13,20 +13,17 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
+    const ROOT_NODE = 'emoe_guzzle';
+
     /**
      * {@inheritdoc}
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
     public function getConfigTreeBuilder()
     {
-        if (method_exists(TreeBuilder::class, 'getRootNode')) {
-            $treeBuilder = new TreeBuilder('my_config');
-            $rootNode = $treeBuilder->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            $treeBuilder = new TreeBuilder();
-            $rootNode = $treeBuilder->root('emoe_guzzle');
-        }
+        $treeBuilder = new TreeBuilder(self::ROOT_NODE);
+        $methodExists = method_exists(TreeBuilder::class, 'getRootNode');
+        $rootNode = $methodExists ? $treeBuilder->getRootNode() : $treeBuilder->root(self::ROOT_NODE);
 
         $rootNode
             ->children()
