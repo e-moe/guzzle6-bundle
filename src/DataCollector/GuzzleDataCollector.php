@@ -42,7 +42,7 @@ class GuzzleDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
-    public function collect(Request $request, Response $response, \Exception $exception = null)
+    public function collect(Request $request, Response $response, \Throwable $exception = null)
     {
         foreach ($this->logAdapter->getLogs() as $log) {
             $requestId = spl_object_hash($log['extras']['request']);
