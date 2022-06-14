@@ -5,9 +5,10 @@ namespace Emoe\GuzzleBundle\Tests\DataCollector;
 use Emoe\GuzzleBundle\DataCollector\GuzzleDataCollector;
 use Emoe\GuzzleBundle\Log\ArrayLogAdapter;
 use GuzzleHttp\MessageFormatter;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class GuzzleDataCollectorTest extends \PHPUnit_Framework_TestCase
+class GuzzleDataCollectorTest extends TestCase
 {
     /** @var  ArrayLogAdapter */
     protected $logAdapter;
@@ -21,7 +22,7 @@ class GuzzleDataCollectorTest extends \PHPUnit_Framework_TestCase
     /** @var  GuzzleDataCollector */
     protected $dataCollector;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->logAdapter = $this->getMockBuilder('Emoe\GuzzleBundle\Log\ArrayLogAdapter')->getMock();
         $this->requestFormatter = $this->getMockBuilder('GuzzleHttp\MessageFormatter')->getMock();

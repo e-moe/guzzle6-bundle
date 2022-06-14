@@ -3,10 +3,14 @@
 namespace Emoe\GuzzleBundle\Tests\DependencyInjection\Compiler;
 
 use Emoe\GuzzleBundle\DependencyInjection\Compiler\MonologCompilerPass;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 
-class MonologCompilerClassTest extends \PHPUnit_Framework_TestCase
+class MonologCompilerClassTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @dataProvider processProvider
      * @SuppressWarnings(PHPMD.StaticAccess)
@@ -14,7 +18,7 @@ class MonologCompilerClassTest extends \PHPUnit_Framework_TestCase
     public function testProcess($hasLogger, $hasHandler)
     {
         $container = $this->prophesize('Symfony\Component\DependencyInjection\ContainerBuilder');
-        $container->has('monolog.logger')->willReturn($hasLogger);
+        $container->has('monolog.logger')->willReturn($hasLogger)->shouldBeCalled();
         $container->getParameter('emoe_guzzle.log.enabled')->willReturn($hasLogger);
 
         if ($hasLogger) {
@@ -22,7 +26,7 @@ class MonologCompilerClassTest extends \PHPUnit_Framework_TestCase
         }
 
         $monologMiddleware = $this->prophesize('Symfony\Component\DependencyInjection\Definition');
-        $monologMiddleware->addMethodCall('attachMiddleware', Argument::type('array'));
+        $monologMiddleware->addMethodCall('attachMiddleware', Argument::type('array'))->willReturn($monologMiddleware->reveal());
 
         $container->findDefinition('emoe_guzzle.request_monolog_middleware')->willReturn(
             $monologMiddleware->reveal()
@@ -39,8 +43,8 @@ class MonologCompilerClassTest extends \PHPUnit_Framework_TestCase
         $testService2->getArguments()->willReturn($hasHandler ? [['handler' => 'test handler #2']] : []);
 
         if ($hasLogger) {
-            $testService1->setArguments(Argument::type('array'))->shouldBeCalled();
-            $testService2->setArguments(Argument::type('array'))->shouldBeCalled();
+            $testService1->setArguments(Argument::type('array'))->willReturn($testService1->reveal())->shouldBeCalled();
+            $testService2->setArguments(Argument::type('array'))->willReturn($testService2->reveal())->shouldBeCalled();
         }
 
         $container->getDefinition('test_service_id_1')->willReturn($testService1->reveal());
