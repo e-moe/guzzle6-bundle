@@ -3,11 +3,10 @@ dist: trusty
 
 matrix:
   include:
-    - php: 7.2
-    - php: 7.2
+    - php: 8.0
+    - php: 8.0
       env: deps=low
-    - php: 7.3
-    - php: 7.4
+    - php: 8.1
   fast_finish: true
 
 install:
