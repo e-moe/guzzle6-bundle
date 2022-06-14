@@ -5,11 +5,12 @@ namespace Emoe\GuzzleBundle\Tests\Middleware;
 use Emoe\GuzzleBundle\Log\ArrayLogAdapter;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Stopwatch\Stopwatch;
 use Emoe\GuzzleBundle\Middleware\RequestLoggerMiddleware;
 use GuzzleHttp\Client;
 
-class RequestLoggerMiddlewareTest extends \PHPUnit_Framework_TestCase
+class RequestLoggerMiddlewareTest extends TestCase
 {
     /** @var  ArrayLogAdapter */
     protected $logAdapter;
@@ -20,7 +21,7 @@ class RequestLoggerMiddlewareTest extends \PHPUnit_Framework_TestCase
     /** @var  RequestLoggerMiddleware */
     protected $middleware;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->logAdapter = $this->getMockBuilder('Emoe\GuzzleBundle\Log\ArrayLogAdapter')->getMock();
         $this->stopwatch = $this->getMockBuilder('Symfony\Component\Stopwatch\Stopwatch')->getMock();

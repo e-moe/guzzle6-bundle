@@ -5,10 +5,11 @@ namespace Emoe\GuzzleBundle\Tests\Middleware;
 use Emoe\GuzzleBundle\Middleware\RequestProfilerMiddleware;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Stopwatch\Stopwatch;
 use GuzzleHttp\Client;
 
-class RequestProfilerMiddlewareTest extends \PHPUnit_Framework_TestCase
+class RequestProfilerMiddlewareTest extends TestCase
 {
     /** @var  Stopwatch */
     protected $stopwatch;
@@ -16,7 +17,7 @@ class RequestProfilerMiddlewareTest extends \PHPUnit_Framework_TestCase
     /** @var  RequestProfilerMiddleware */
     protected $middleware;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->stopwatch = $this->getMockBuilder('Symfony\Component\Stopwatch\Stopwatch')->getMock();
         $this->middleware = new RequestProfilerMiddleware($this->stopwatch);

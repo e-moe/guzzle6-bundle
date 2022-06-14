@@ -4,15 +4,16 @@ namespace Emoe\GuzzleBundle\Tests\Log;
 
 use Emoe\GuzzleBundle\Log\MonologLogAdapter;
 use Monolog\Logger;
+use PHPUnit\Framework\TestCase;
 
-class MonologLogAdapterTest extends \PHPUnit_Framework_TestCase
+class MonologLogAdapterTest extends TestCase
 {
     /** @var  MonologLogAdapter */
     protected $logAdapter;
 
     protected $logger;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->logger = $this->getMockBuilder('Monolog\Logger')->disableOriginalConstructor()->getMock();
         $this->logAdapter = new MonologLogAdapter($this->logger);

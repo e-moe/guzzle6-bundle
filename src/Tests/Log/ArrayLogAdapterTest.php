@@ -3,13 +3,14 @@
 namespace Emoe\GuzzleBundle\Tests\Log;
 
 use Emoe\GuzzleBundle\Log\ArrayLogAdapter;
+use PHPUnit\Framework\TestCase;
 
-class ArrayLogAdapterTest extends \PHPUnit_Framework_TestCase
+class ArrayLogAdapterTest extends TestCase
 {
     /** @var  ArrayLogAdapter */
     protected $logAdapter;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->logAdapter = new ArrayLogAdapter();
     }
